@@ -1,2 +1,2 @@
-# bu
-User-Centric Semi-Structured Natural Language Generation. I'm not naming this "improved-waddle" Github...
+# distbu
+An ML dataset distribution server I created as a side-project for my SH.
