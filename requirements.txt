@@ -1,7 +1,0 @@
-keras
-theano
-numpy
-scikit-learn
-spacy
-pandas
-tensorflow
