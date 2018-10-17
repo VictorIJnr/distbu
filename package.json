@@ -2,7 +2,9 @@
   "name": "server",
   "version": "0.0.0",
   "private": true,
+  "main": "./.netlify-functions/server.js",
   "scripts": {
+    "build": "netlify-lambda build express",
     "start": "clear; node server.js"
   },
   "dependencies": {

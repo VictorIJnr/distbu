@@ -17,8 +17,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use("/", index);
 app.use("/data", data);
-app.use("/.netlify/functions/server", index); // Routing path to lambda
-app.use("/.netlify/functions/server/data", data); // Routing path to lambda
 
 console.log("Running on port");
 
