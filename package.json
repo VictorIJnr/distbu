@@ -4,13 +4,13 @@
   "private": true,
   "main": "./.netlify-functions/server.js",
   "scripts": {
-    "build": "netlify-lambda build express",
     "start": "clear; node server.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
+    "netlify-lambda": "^1.0.2",
     "serverless-http": "^1.6.0"
   }
 }
