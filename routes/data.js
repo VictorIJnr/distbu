@@ -18,6 +18,11 @@ router.get("/:dataset/:type", function(req, res, next) {
     let dirFiles;
     dataPath = path.join(rootPath, "data/", req.params.dataset);
 
+    /*
+        DON'T QUERY MARCO WITHOUT GRAPHQL PAGINATION
+        HOLY FUCK IT TAKES FOREVER TO LOAD, PLUS IT HEATS
+        UP THIS BOI QUITE A FREAKING BIT
+    */
     if (!fs.existsSync(dataPath)) {
         res.json(sendError("File not found"));
         return;
