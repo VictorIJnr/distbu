@@ -22,7 +22,7 @@ app.use("/.netlify/functions/server/data", data); // Routing path to lambda
 
 console.log("Running on port");
 
-app.listen(20793);
+app.listen(process.env.PORT || 20793);
 
 module.exports = app;
 // module.exports.handler = serverless(app);
