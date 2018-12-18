@@ -4,6 +4,12 @@
 #apart from a cheeky lil' xD 
 data/marco
 
+#Not using hosts as a data dump, instead I'm using DigitalOcean
+#which seems pretty decent so far ngl. But this file is just gonna
+#be used to test my DigitalOcean Space. So there's stuff in here
+#that I don't exactly want anyone to see obvs.
+digiTest*.js
+
 # Logs
 logs
 *.log
