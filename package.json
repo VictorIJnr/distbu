@@ -4,7 +4,8 @@
   "private": true,
   "main": "./.netlify-functions/server.js",
   "scripts": {
-    "start": "clear; node server.js"
+    "start": "clear; node server.js",
+    "clearless": "node server.js"
   },
   "dependencies": {
     "aws-sdk": "^2.348.0",
