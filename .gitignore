@@ -10,6 +10,8 @@ data/marco
 #that I don't exactly want anyone to see obvs.
 digiTest*.js
 
+config/
+
 # Logs
 logs
 *.log
