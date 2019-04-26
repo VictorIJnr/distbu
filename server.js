@@ -20,7 +20,7 @@ app.use("/data", data);
 app.use("/.netlify/functions/server", index); // Routing path to lambda
 app.use("/.netlify/functions/server/data", data); // Routing path to lambda
 
-console.log("Running on port");
+console.log(`Running on port ${process.env.PORT || 20793}`);
 
 app.listen(process.env.PORT || 20793);
 

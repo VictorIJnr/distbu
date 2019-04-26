@@ -5,7 +5,7 @@ An ML dataset distribution server I created as a side-project for my SH.
 Yep, I'm beginning to make this into an absurdly complicated project, even though this should be supplementary to my SH. 
 > Lay it on me fam.  
 
-Okay. So, <span style="color:#333">distbu</span> is just a way to store all of my training/testing data into a database which can be queried with a GraphQL api. But since I'm me, there's also a bit of Docker sprinkled around here and there.
+Okay. So, <span style="color:#333">distbu</span> is just a way to store all of my training/testing data into a database which can be queried with a GraphQL API. But since I'm me, there's also a bit of Docker sprinkled around here and there.
 
 ## You know what imma ask next.
 Of course I do. "Why you doin all dis fam?" some shit like that right?

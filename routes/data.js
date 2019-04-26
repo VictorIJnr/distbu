@@ -21,6 +21,9 @@ let s3 = new AWS.S3({
 * Index to yeet back a list of files stored on DigitalOcean
 * It's actually a little bit more than that because I don't do any pre-processing
 * but it's fine. Trust me. You know what, I'm getting rid of that useless loop.
+*
+* UPDATE: It's Friday the 26th of April 2019, I haven't worked on this in a while
+* but it looks like I got rid of "that useless loop". 
 */
 router.get("/", function(req, res) {
     let digiParams = {
@@ -33,6 +36,9 @@ router.get("/", function(req, res) {
     });
 });
 
+/**
+ * Retrieves a specified dataset from the database where it's stored.
+ */
 router.get("/:dataset/:type", function(req, res) {
     let digiParams = {
         Bucket: myDigiSpace,
@@ -46,11 +52,14 @@ router.get("/:dataset/:type", function(req, res) {
         * I don't know what was wrong with me the last time I was working on this.
         * First "choo choo", now "la la". Maybe I was having a breakdown or something.
         * Idk but they're staying here forever now. Why? Because I said so. 
+        * 
+        * 26th April: Yeah imma comment them out though. Sorry.
         */
-        console.log("la la");
+
+        /* console.log("la la");
         console.log(data);
         console.log("transed");
-        console.log(data.Body);
+        console.log(data.Body); */
         res.send(JSON.parse(data.Body));
     })
     .catch((err) => res.send(err));
