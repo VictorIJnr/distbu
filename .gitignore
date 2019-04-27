@@ -12,6 +12,10 @@ digiTest*.js
 
 config/
 
+# Just in case for any venvs within a subdirectory.
+*venv/
+*__pycache__/
+
 # Logs
 logs
 *.log
