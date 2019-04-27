@@ -20,8 +20,31 @@ Runs the conversion of CSVs stored on DigitalOcean into JSONs.
 def conversion():
     digiConfig = getConfig()
     digiClient = digiConnect()
+    
+    #? Getting the names of all the files; don't need directories 
+    allObjs = digiClient.list_objects_v2(Bucket=digiConfig["digiSpace"])["Contents"]
+    allObjs = [myObj for myObj in allObjs if myObj["Size"] != 0 and not myObj["Key"].endswith("/")]
 
-    pprint(digiClient.list_objects_v2(Bucket=digiConfig["digiSpace"])["Contents"])
+    #// objList = {myObj["Key"]: myObj["Size"] for myObj in allObjs}
+    objList = [myObj["Key"] for myObj in allObjs]
+
+    pprint(objList)
+
+    myFile = digiClient.get_object(Bucket=digiConfig["digiSpace"],
+                            Key=objList[-1],
+                            ResponseContentType="application/json")["Body"]
+    fileData = myFile.read()
+    decoded = fileData.decode("utf-8")
+    # pprint(type(json.loads(fileData)[0]))
+    pprint(decoded)
+    # pprint(type(decoded))
+
+    #! It works since the data is a bunch of numbers
+
+    # for myKey in objList:
+    #     myFile = digiClient.get_object(Bucket=digiConfig["digiSpace"],
+    #                         Key=myKey)["Body"]
+    #     pprint(myFile.read())
 
 """
 Loads the DigitalOcean config file into memory so I can connect to DigiOcean. 
