@@ -18,3 +18,6 @@ AILR? Eh could be a better acronym. But this is a lightbulb moment if anything. 
     + Instead of just sending them the entire file
     + Everything after this comes after the streaming revalation
     + But each chunk I send over has to be a complete record - no question
+
+# GraphQL
+I think my understanding of GraphQL wasn't sufficient. I wanted to add this to allow for pagination. But given the way I'll implement it, there's no reason I can't just use a REST API. 

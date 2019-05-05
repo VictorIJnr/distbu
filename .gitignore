@@ -1,8 +1,7 @@
-#Okay, I'll omit the entire data file once I sart using
-#hosts as a data dump... I don't know why I find that to 
-#be so hilarious. Nothing can express how that makes me feel 
-#apart from a cheeky lil' xD 
-data/marco
+# Well I'm storing everything on Digi for the time being
+# Let's see how long that'll last after my student credit runs out.
+data/
+
 
 #Not using hosts as a data dump, instead I'm using DigitalOcean
 #which seems pretty decent so far ngl. But this file is just gonna

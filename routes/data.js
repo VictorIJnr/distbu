@@ -125,6 +125,10 @@ function getFileType(dataset, fileName) {
                     } 
                 });
 
+                // Because j comes after c in the alphabet, I always get the JSON file back
+                // That's what I want, but if I have scalability issues with file types somehow
+                // just look here. That was accidental btw, I just discovered it after
+                // adding CSV to JSON conversion.
                 console.log(`File Extension:\t${extension}`);
                 if (extension) resolve(extension);
                 else reject("File not found");
