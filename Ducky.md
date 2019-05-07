@@ -36,3 +36,6 @@ So, distbu is only saving the user space. For me, that's all I want. And since t
 Now that I think about it. Programmatically altering the schema isn't difficult whatsoever. The hardest part would be type inference of the fields of the dataset. Writing to the schema is nothing more than reading the file, and appending a new, unique type with all the fields of the dataset. That can wait for a while. Let's not get ahead of ourselves, get the MVP from the aside done first.
 
 I should test this out with Sleeky (that repo's never going to become public).
+
+# Resolution
+I may need to rethink this. Looking at the resolver for all the datasets. It's not wrong by any means. But if I pulled all the data for every single dataset in the resolution process, it would, obviously, take forever. Figuratively of course. But, I'm still not doing anything wrong. **_Actually_**, I could leave the resolution of the records until the File resolver. That way resolving a dataset doesn't need to pull all the data in the process. So if you decide to get all the records for all of the datasets, that's your problem and you chose to make that mistake, and I'm in the clear :D! Can't help but feel there's a design philosophy out there advising against a design which could lead users to "errors" like this though...      

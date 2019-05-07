@@ -103,6 +103,8 @@ function getFile(dataset, file) {
 * @param {String} fileName the file to be retrieved from that dataset
 */
 function getFileType(dataset, fileName) {
+    //TODO change this to query the GraphQL server.
+
     let digiParams = {
         Bucket: myDigiSpace,
         StartAfter: `data/${dataset}`

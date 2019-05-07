@@ -12,11 +12,20 @@ type Dataset {
 # type User { 
 #     # UserID: ID! #@unique # Duh.
 #     username: String!
-# }
+# } 
 
 # Allows for the returning of the data to the user
 type File {
     dataset: Dataset!
     name: String!
+    records: [String!]  # This'll store all the data upon a request response. 
+}
+
+# An abstraction over the records in a dataset is added to make resolution easier.
+# Otherwise, when getting a dataset, all the records would be supplied
+# and there would be a large amount of data being downloaded. 
+# I thought about this before I had that revelation in Ducky
+# I'm only keeping this here for one commit, then it disappears.
+type DataFile {
     records: [String!]  # This'll store all the data upon a request response. 
 }
