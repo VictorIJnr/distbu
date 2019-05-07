@@ -1,8 +1,5 @@
 let express = require("express");
 let router = express.Router();
-let path = require("path");
-let fs = require("fs");
-let request = require("request");
 let AWS = require('aws-sdk');
 
 let config = require("../config/docean.json")
@@ -14,9 +11,9 @@ let myDigiSecret = config.digiSecret;
 let myDigiPoint = new AWS.Endpoint(`${myDigiRegion}.digitaloceanspaces.com/`);
 
 /**
- * For some reason it doesn't work directly with the properties in config.
- * And, no, they're not different. I checked, they're exactly identical.
- */
+* For some reason it doesn't work directly with the properties in config.
+* And, no, they're not different. I checked, they're exactly identical.
+*/
 let s3 = new AWS.S3({
     endpoint: myDigiPoint,
     accessKeyId: myDigiOceanKey,

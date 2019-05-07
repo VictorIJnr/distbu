@@ -1,11 +1,7 @@
-type Dataset {
-    ID: ID! @unique
-    fileName: String! @unique
-    records: [String!]  # This'll store all the data upon a request response. 
-    owner: User # I'm not scaling this yet.
-}
+# import Dataset, File, User from "./types.graphql"
 
-type User { # You know, just in case we can scale to have user accounts and shit
-    UserID: ID! @unique # Duh.
-    username: String!
+type Query {
+    datasets(myName: String!): Dataset!
+    allDatasets: [Dataset!]!
+    datasetFiles(myName: String!): [File!]!
 }

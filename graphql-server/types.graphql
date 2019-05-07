@@ -1,0 +1,22 @@
+# The schema is made in accordance to the initially-assumed structure 
+# Each dataset is composed of different files, such as training and testing
+
+type Dataset {
+    # ID: ID! @unique
+    name: String!
+    files: [File!]!
+    # owner: User # I'm not scaling this yet.
+}
+
+# You know, just in case we can scale to have user accounts
+# type User { 
+#     # UserID: ID! #@unique # Duh.
+#     username: String!
+# }
+
+# Allows for the returning of the data to the user
+type File {
+    dataset: Dataset!
+    name: String!
+    records: [String!]  # This'll store all the data upon a request response. 
+}
