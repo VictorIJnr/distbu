@@ -21,21 +21,27 @@ They also support MongoDB as a backend too (Mongo's looking fine AF with its doc
 
 Well, I've actually decided not to use MySQL anymore. Turns out I don't really need it. I think. I don't need MongoDB either, but it still looks absolutely gorgeous.
 
-## That's tight bruv, but how's this complex?
-How about you try to make this with everything I'm doing and tell me it's not complex?
-> Damn, sorry cuz.
+## That's tight bruv, but you ain't done nothing yet?
+Two things:  
+1. How's that a question?
+2. If I "ain't done nothing yet" then I've done something? I'll take that :D
 
-"dAmN, sORrY Cuz." Screw you. Look at this. This is what I need to do to run this properly.
+> Skip the pediatrics cuz, how'm I gonna run this boi?
+
+_Pedantics_.
+
+> Fam...
+
+Okay, okay it doesn't seem like much because I'm completely ignoring menial crap that doesn't need to be done to run <span style="color:#333">distbu</span>. I'm talking stuff like building a docker image or going to a URL where <span style="color:#333">distbu</span>'s running. But trust me, it's still a lil' complex. <sup><sup><sup><sup>Hell I kinda like the underlying complexity.</sup></sup></sup></sup>. I just don't need to bore you with each and every <span style="font-size: 0.65em">tiny</span> implementation detail. But this is what I need to do to run this properly.
 
 + Deploy the api service to Heroku 
-  + BUT DON'T WORRY, I'VE ALREADY DONE THIS BUT IT WON'T WORK FOR ANY GraphQL QUERIES YET
-+ Deploy the MySQL database onto DigitalOcean <sup><sup>Well I don't need this because MySQL isn't a part of <span style="color:#333">distbu</span> anymore</sup></sup>
-+ Some docker container shenanigans.
+  + I've already done this, but it won't work for any GraphQL queries yet.
++ ~~Deploy the MySQL database onto DigitalOcean~~ <sup><sup>Well I don't need this because MySQL isn't a part of <span style="color:#333">distbu</span> anymore</sup></sup>
++ `docker container run --name distQL -p 20794:20794 victorijnr/distbu`
+    + Now this, this isn't even that complicated. 
+    + All this does is start the docker container for the GraphQL API server and exposes the port it's running on to the host machine.
+    + This is what I need to do locally, I haven't deployed it anywhere yet.
 
-+ `docker-compose up -d --build`  
-  + OH WHAT'S THIS? A DOCKER COMPOSE COMMAND?!?!?!?!?!?! Yes. Yes it freaking is. 2 Docker images need to be built, 1 for the MySQL database (which I'm still working on in my Sandbox because I'm scared) and 1 for the GraphQL server.
-  + Plus I'll probably have to do this on the DigitalOcean VM I spin up ([Imagine that, running a container inside a VM](https://www.zdnet.com/article/what-is-docker-and-why-is-it-so-darn-popular/), Solomon Hykes probably hates me right now)
-  + Oh and let's not forget that my docker-compose.yml file has to be goddamn pristine.
 
 But all that is without menial crap like making sure I can build the database and its tables from my CSV files. But yeah "hOw'S thiS cOmPLEx?". Pleb.
 
