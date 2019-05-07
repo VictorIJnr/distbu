@@ -1,6 +1,7 @@
 let AWS = require('aws-sdk');
 
-let config = require("../../config/docean.json");
+let config = require("../config/docean.json");
+// let config = require("../../config/docean.json");
 
 let myDigiRegion = config.digiRegion;
 let myDigiSpace = config.digiSpace;
@@ -23,7 +24,8 @@ function isDir(digiFile) {
     return digiFile.Size == 0 && digiFile.Key.endsWith("/");
 }
 
-//Implementing the resolver functions for the Dataset type.
+// TODO move this to its own file, not a subset of the Query resolvers 
+// Implementing the resolver functions for the Dataset type.
 const Dataset = {
     name: (parent) => {
 
@@ -33,7 +35,8 @@ const Dataset = {
     }
 }
 
-//Implementation for resolvers of attributes on the field type.
+// TODO move this to its own file, not a subset of the Query resolvers
+// Implementation for resolvers of attributes on the field type.
 const Files = {
     dataset: (parent) => {
         if (parent) return parent.dataset;
@@ -72,15 +75,15 @@ module.exports = {
             else {
                 let myDatasets = [];
 
-                //Parse the response to form all the dataset objects. 
-                //Only directories are considered datasets.
+                // Parse the response to form all the dataset objects. 
+                // Only directories are considered datasets.
                 data.Contents.filter(isDir).forEach(myFile => {
                     let myDataset = {
                         name: myFile.Key,
                         files: []
                     };
 
-                    //Identifying and creating each file for a specific dataset.
+                    // Identifying and creating each file for a specific dataset.
                     data.Contents.forEach(subFile => {  
                         if (subFile.Key.startsWith(myFile.Key)) {
                             let dataFile = {
@@ -98,7 +101,5 @@ module.exports = {
                 return myDatasets;
             }
         });
-    },
-    Dataset,
-    Files
+    }
 };

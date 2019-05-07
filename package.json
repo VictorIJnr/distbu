@@ -6,7 +6,8 @@
   "scripts": {
     "start": "clear; node server.js",
     "clearless": "node server.js",
-    "graphql": "clear; node graphql-server/graphi.js"
+    "graphql": "clear; node graphql-server/graphi.js",
+    "graphql-docker": "clear; node graphi.js"
   },
   "dependencies": {
     "aws-sdk": "^2.348.0",

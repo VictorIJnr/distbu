@@ -1,3 +1,5 @@
+# import Dataset, File, User from "./types.graphql"
+
 # The schema is made in accordance to the initially-assumed structure 
 # Each dataset is composed of different files, such as training and testing
 

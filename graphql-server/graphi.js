@@ -1,7 +1,8 @@
 const { GraphQLServer } = require("graphql-yoga");
 // const { Prisma } = require("prisma-binding");
 
-const schema = "./graphql-server/schema.graphql";
+const schema = "./schema.graphql";
+// const schema = "./graphql-server/schema.graphql";
 
 const queries = require("./resolvers/Query");
 const mutations = require("./resolvers/Mutation");
