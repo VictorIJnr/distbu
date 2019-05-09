@@ -1,6 +1,6 @@
 type Query {
     datasets(myName: String!): Dataset!
-    allDatasets: [Dataset!]!
+    allDatasets: [Dataset!]
     datasetFiles(myName: String!): [File!]!
 }
 

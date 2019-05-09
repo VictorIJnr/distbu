@@ -10,4 +10,5 @@ RUN ls
 RUN npm install
 
 # Start the server when the container is invoked
-ENTRYPOINT ["npm", "run", "graphql-docker"]
+# ENTRYPOINT ["npm", "run", "graphql-docker"]
+ENTRYPOINT "bash"

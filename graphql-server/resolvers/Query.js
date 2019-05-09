@@ -24,82 +24,79 @@ function isDir(digiFile) {
     return digiFile.Size == 0 && digiFile.Key.endsWith("/");
 }
 
-// TODO move this to its own file, not a subset of the Query resolvers 
-// Implementing the resolver functions for the Dataset type.
-const Dataset = {
-    name: (parent) => {
+/**
+ * Creates a Dataset object based on the request returned by Digi. 
+ * @param {Object} currFile the current file from Digi being processed
+ * @param {Object} resData the data returned from the request to Digi
+ */
+function makeDataset(currFile, resData) {
+    let myDataset = {
+        name: currFile.Key,
+        files: []
+    };
 
-    },
-    files: (parent) => {
+    // Identifying and creating each file for a specific dataset.
+    resData.Contents.forEach(subFile => {  
+        if (subFile.Key.startsWith(currFile.Key)) {
+            let dataFile = {
+                dataset: currFile.Key,
+                name: subFile.Key.replace(currFile.Key, "")
+            };
 
-    }
-}
-
-// TODO move this to its own file, not a subset of the Query resolvers
-// Implementation for resolvers of attributes on the field type.
-const Files = {
-    dataset: (parent) => {
-        if (parent) return parent.dataset;
-        else {
-            // Resolve this using a request to the distbu Digi Space
+            myDataset.files.push(dataFile);
         }
-    },
-    
-    name: (parent) => {
-        if (parent) return parent.name;
-        else {
-            // Resolve this using a request to the distbu Digi Space
-        }
-    },
+    });
 
-    /**
-    * This is the only place where records should be resolved.
-    * Resolving them in a parent would hinder performance too much for my liking.
-    */
-    records: (parent) => {
-
-    }
+    return myDataset;
 }
 
 module.exports = {
     /**
     * Retrieves a single dataset parameterised by the name provided as an argument.
     */
-    datasets: (parent, args, context) => {
+    datasets: async (parent, args, context) => {
+        let retValue = {};
 
-    },
-    allDatasets: () => {
-        // Getting all the files stored in Digi
-        s3.listObjectsV2({Bucket: myDigiSpace}, (err, data) => {
-            if (err) return {}; //TODO make a suitable error object
-            else {
-                let myDatasets = [];
-
-                // Parse the response to form all the dataset objects. 
-                // Only directories are considered datasets.
-                data.Contents.filter(isDir).forEach(myFile => {
-                    let myDataset = {
-                        name: myFile.Key,
-                        files: []
-                    };
-
-                    // Identifying and creating each file for a specific dataset.
-                    data.Contents.forEach(subFile => {  
-                        if (subFile.Key.startsWith(myFile.Key)) {
-                            let dataFile = {
-                                dataset: myFile.Key,
-                                name: subFile.Key.replace(myFile.Key, "")
-                            };
-
-                            myDataset.files.push(dataFile);
-                        }
-                    });
-
-                    myDatasets.push(myDataset);
-                });
-
-                return myDatasets;
-            }
+        // Need to use a Promise so the request to Digi is made and returned
+        // as a part of the resolution.
+        let myPromise = new Promise((resolve, reject) => {
+            let digiParams = {
+                Bucket: myDigiSpace,
+                Prefix: `data/${args.myName}`
+            };
+    
+            // Getting all the files stored in Digi
+            s3.listObjectsV2(digiParams, (err, data) => {
+                if (err) reject(err); //TODO make a suitable error object
+                else data.Contents.filter(isDir).forEach(myFile => resolve(makeDataset(myFile, data)));
+            });
         });
+
+        // Returning the value in the scope of the Promise doesn't work, even if it's awaited
+        await myPromise.then(dataset => retValue = dataset);
+        return retValue;
+    },
+    allDatasets: async () => {
+        let retValue = [];
+
+        let myPromise = new Promise((resolve, reject) => {
+            // Getting all the files stored in Digi
+            s3.listObjectsV2({Bucket: myDigiSpace}, async (err, data) => {
+                if (err) reject(err); //TODO make a suitable error object
+                else {
+                    let myDatasets = [];
+    
+                    // Parse the response to form all the dataset objects. 
+                    // Only directories are considered datasets.
+                    await data.Contents.filter(isDir)
+                        .forEach(myFile => myDatasets.push(makeDataset(myFile, data)));
+                    
+                    resolve(myDatasets);
+                }
+            })
+        });
+
+        await myPromise.then((myDatasets) => {retValue = myDatasets});
+        return retValue;
     }
 };

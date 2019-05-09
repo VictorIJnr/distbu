@@ -1,5 +1,6 @@
 let express = require("express");
 let router = express.Router();
+let request = require("request");
 let AWS = require('aws-sdk');
 
 let config = require("../config/docean.json")
@@ -36,6 +37,31 @@ router.get("/", function(req, res) {
     s3.listObjectsV2(digiParams, (err, data) => {
         if (err) res.send(err);
         else res.send(data);
+    });
+});
+
+/**
+ * Just an endpoint to test stuff I'm working on with the GraphQL server
+ */
+router.get("/choochoo", function(req, res) {
+    let myQuery = {
+        query: `{
+            allDatasets {
+                name
+            }
+        }`
+    };
+
+    let reqOptions = {
+        body: JSON.stringify(myQuery), 
+        headers: {"Content-Type": "application/json"}
+    };
+
+    request.get("http://localhost:20794/api/graphql", reqOptions, function(err, body, response) {
+        console.log(err);
+        // console.log(body);
+        console.log(response);
+        res.send(response);
     });
 });
 
@@ -98,8 +124,7 @@ function getFile(dataset, file) {
 }
 
 /**
-* Gets the extension for the requested file.
-* @param {String} dataset the dataset to pull the file from 
+* Gets the extension for the requested file.z file from 
 * @param {String} fileName the file to be retrieved from that dataset
 */
 function getFileType(dataset, fileName) {
