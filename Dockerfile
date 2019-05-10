@@ -9,6 +9,7 @@ COPY graphql-server/ /distbu
 RUN ls
 RUN npm install
 
+EXPOSE 20794
+
 # Start the server when the container is invoked
-# ENTRYPOINT ["npm", "run", "graphql-docker"]
-ENTRYPOINT "bash"
+ENTRYPOINT ["npm", "run", "graphql-docker"]

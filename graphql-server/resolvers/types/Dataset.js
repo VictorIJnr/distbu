@@ -1,11 +1,9 @@
 // Implementing the resolver functions for the Dataset type.
 module.exports = {
     name: (parent) => {
-        if (parent) return parent.name;
-        else return "nope"; //TODO
+        return parent.name;
     },
     files: (parent) => {
-        if (parent) return parent.files;
-        else return []; //TODO
+        return parent.files;
     }
 };

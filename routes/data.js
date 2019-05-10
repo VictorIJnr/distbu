@@ -57,9 +57,8 @@ router.get("/choochoo", function(req, res) {
         headers: {"Content-Type": "application/json"}
     };
 
-    request.get("http://localhost:20794/api/graphql", reqOptions, function(err, body, response) {
-        console.log(err);
-        // console.log(body);
+    // Need to use the IP of the container, it's not locally
+    request.post("http://172.17.0.2:20794/", reqOptions, function(err, body, response) {
         console.log(response);
         res.send(response);
     });
