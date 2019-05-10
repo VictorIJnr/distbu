@@ -66,14 +66,14 @@ router.get("/choochoo", function(req, res) {
                 name
                 files {
                     name
-                    # records
+                    records
                 }
             }
         }`
     })
     .then(response => {
-        console.log(response);
-        // console.log(response.data.datasets.files[0].records);
+        // console.log(response);
+        console.log(JSON.parse(response.data.datasets.files[0].records));
         // res.send(response.data.datasets.files[0].records);
         res.send(response);
     })
