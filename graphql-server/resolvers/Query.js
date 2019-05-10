@@ -22,7 +22,7 @@ function makeDataset(currFile, resData) {
 
     // Identifying and creating each file for a specific dataset.
     resData.Contents.forEach(subFile => {  
-        if (subFile.Key.startsWith(currFile.Key)) {
+        if (subFile.Key !== currFile.Key && subFile.Key.startsWith(currFile.Key)) {
             let dataFile = {
                 dataset: currFile.Key,
                 name: subFile.Key.replace(currFile.Key, "")

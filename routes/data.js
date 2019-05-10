@@ -62,14 +62,24 @@ router.get("/", function(req, res) {
 router.get("/choochoo", function(req, res) {
     clientQL.query({
         query: gql`{
-            allDatasets {
+            datasets(myName: "topic-dialogues") {
                 name
+                files {
+                    name
+                    # records
+                }
             }
         }`
     })
     .then(response => {
         console.log(response);
+        // console.log(response.data.datasets.files[0].records);
+        // res.send(response.data.datasets.files[0].records);
         res.send(response);
+    })
+    .catch(err => {
+        console.log("Errors are fun aren't they? :D");
+        res.send(err);
     });
 });
 
@@ -103,9 +113,10 @@ router.get("/:dataset/:type", function(req, res) {
 });
 
 function getFile(dataset, file) {
+    //TODO change this to query the GraphQL server
     let digiParams = {
         Bucket: myDigiSpace
-    }
+    };
 
     console.log(`Requesting:\t${dataset}/${file}`);
     
