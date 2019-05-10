@@ -1,9 +1,12 @@
-let express = require("express");
-let router = express.Router();
-let request = require("request");
-let AWS = require('aws-sdk');
+const express = require("express");
+const router = express.Router();
+const AWS = require("aws-sdk");
 
-let config = require("../config/docean.json")
+const { ApolloClient, InMemoryCache } = require("apollo-boost");
+const { createHttpLink } = require("apollo-link-http");
+const gql = require("graphql-tag");
+
+const config = require("../config/docean.json")
 
 let myDigiRegion = config.digiRegion;
 let myDigiSpace = config.digiSpace;
@@ -19,6 +22,19 @@ let s3 = new AWS.S3({
     endpoint: myDigiPoint,
     accessKeyId: myDigiOceanKey,
     secretAccessKey: myDigiSecret
+});
+
+// Need to use the IP of the container, it's not localhost. 
+const endpointQL = "http://172.17.0.2:20794/";
+const link = createHttpLink({
+    uri: endpointQL,
+    fetch: require("node-fetch"),
+});
+
+let clientQL = new ApolloClient({
+    uri: endpointQL,
+    cache: new InMemoryCache(),
+    link
 });
 
 /**
@@ -44,21 +60,14 @@ router.get("/", function(req, res) {
  * Just an endpoint to test stuff I'm working on with the GraphQL server
  */
 router.get("/choochoo", function(req, res) {
-    let myQuery = {
-        query: `{
+    clientQL.query({
+        query: gql`{
             allDatasets {
                 name
             }
         }`
-    };
-
-    let reqOptions = {
-        body: JSON.stringify(myQuery), 
-        headers: {"Content-Type": "application/json"}
-    };
-
-    // Need to use the IP of the container, it's not locally
-    request.post("http://172.17.0.2:20794/", reqOptions, function(err, body, response) {
+    })
+    .then(response => {
         console.log(response);
         res.send(response);
     });

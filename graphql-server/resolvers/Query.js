@@ -1,4 +1,4 @@
-let {s3, myDigiSpace} = require("../s3");
+let { s3, myDigiSpace } = require("../s3");
 
 /**
 * Checks if a file is a directory
