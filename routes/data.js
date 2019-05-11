@@ -84,29 +84,18 @@ router.get("/choochoo", function(req, res) {
  * Retrieves a specified dataset from the database where it's stored.
  */
 router.get("/:dataset/:type", function(req, res) {    
-    let digiParams = {
-        Bucket: myDigiSpace,
-        Key: `data/${req.params.dataset}/${req.params.type}`,
-        ResponseContentType: "application/json"
-    }
-
-    getFile(req.params.dataset, req.params.type)
-    .then((data) => {
-        /**
-        * I don't know what was wrong with me the last time I was working on this.
-        * First "choo choo", now "la la". Maybe I was having a breakdown or something.
-        * Idk but they're staying here forever now. Why? Because I said so. 
-        * 
-        * 26th April: Yeah imma comment them out though. Sorry.
-        */
-
-        /* console.log("la la");
-        console.log(data);
-        console.log("transed");
-        console.log(data.Body); */
-        res.send(JSON.parse(data.Body));
+    clientQL.query({
+        query: gql`{
+            datasets(myName: ${JSON.stringify(req.params.dataset)}) {
+                files(nameContains: ${JSON.stringify(req.params.type)}) {
+                    records
+                }
+            }
+        }`
     })
-    .catch((err) => res.send(err));
+    .then(response => {
+        res.send(response.data.datasets.files[0].records);
+    });
 });
 
 function getFile(dataset, file) {
@@ -178,15 +167,6 @@ function getFileType(dataset, fileName) {
 
     
     return typePromise;
-}
-
-function sendError(message) {
-    let error = {
-        msg: message,
-        status: 400
-    };
-
-    return error;
 }
 
 module.exports = router;

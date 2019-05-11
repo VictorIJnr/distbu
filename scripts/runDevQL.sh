@@ -4,7 +4,7 @@
 # mv /tempbu/* .; rm -rf /tempbu
 # This is to overcome the fact that the bind mount overwrites the destination directory
 
-docker stop distQL
-docker container run -itp 20794:20794 --rm --name distQL \
+docker stop distQLdev
+docker container run -itp 20794:20794 --rm --name distQLdev \
     --mount type=bind,src=$(pwd)/graphql-server/,dst=/distbu \
     victorijnr/distql:dev
