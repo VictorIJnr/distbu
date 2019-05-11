@@ -1,3 +1,5 @@
+scalar JSON
+
 type Query {
     datasets(myName: String!): Dataset!
     allDatasets: [Dataset!]
@@ -24,5 +26,6 @@ type Dataset {
 type File {
     dataset: Dataset!
     name: String!
-    records: String!    # This'll store all the data upon a request response. 
+    # records: String!    # This'll store all the data upon a request response. 
+    records: JSON!
 }

@@ -72,10 +72,8 @@ router.get("/choochoo", function(req, res) {
         }`
     })
     .then(response => {
-        // console.log(response);
-        console.log(JSON.parse(response.data.datasets.files[0].records));
         // res.send(response.data.datasets.files[0].records);
-        res.send(response);
+        res.send(response.data);
     })
     .catch(err => {
         console.log("Errors are fun aren't they? :D");
@@ -86,7 +84,7 @@ router.get("/choochoo", function(req, res) {
 /**
  * Retrieves a specified dataset from the database where it's stored.
  */
-router.get("/:dataset/:type", function(req, res) {
+router.get("/:dataset/:type", function(req, res) {    
     let digiParams = {
         Bucket: myDigiSpace,
         Key: `data/${req.params.dataset}/${req.params.type}`,

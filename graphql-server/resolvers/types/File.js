@@ -29,6 +29,6 @@ module.exports = {
         });
 
         await myPromise.then(data => myData = data.Body);
-        return JSON.stringify(myData);
+        return JSON.parse(myData);
     }
 }

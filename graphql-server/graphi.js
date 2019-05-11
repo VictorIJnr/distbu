@@ -1,5 +1,6 @@
 const { ApolloServer, gql } = require("apollo-server");
 const fs = require("fs");
+const GraphQLJSON = require("graphql-type-json");
 
 // Reading the schema file because I was too lazy to copy it into a JS file.
 // Plus, I kinda wanted to keep the .graphql extension - makes it clear what it is.
@@ -12,10 +13,14 @@ const subscriptions = require("./resolvers/Subscription");
 const dataset = require("./resolvers/types/Dataset");
 const fileQL = require("./resolvers/types/File");
 
+const scalarResolvers = {
+    JSON: GraphQLJSON
+};
+
 //! Add mutations and subscribtions to the resolvers when they're implemented
 let app = new ApolloServer({
     typeDefs: gql`${mySchema}`,
-    resolvers: {Query: queries, Dataset: dataset, File: fileQL}
+    resolvers: {Query: queries, Dataset: dataset, File: fileQL, ...scalarResolvers}
 });
 
 let myOptions = {
