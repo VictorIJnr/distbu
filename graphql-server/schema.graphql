@@ -3,7 +3,6 @@ scalar JSON
 type Query {
     datasets(myName: String!): Dataset!
     allDatasets: [Dataset!]
-    datasetFiles(myName: String!): [File!]!
 }
 
 # The schema is made in accordance to the initially-assumed structure 
@@ -12,7 +11,7 @@ type Query {
 type Dataset {
     # ID: ID! @unique
     name: String!
-    files: [File!]!
+    files(nameContains: String): [File!]!
     # owner: User # I'm not scaling this yet.
 }
 

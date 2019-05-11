@@ -6,7 +6,7 @@ module.exports = {
         return parent.dataset;
     },
     
-    name: (parent) => {
+    name: (parent, args) => {
         return parent.name;
     },
 

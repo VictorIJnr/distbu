@@ -14,21 +14,23 @@ function isDir(digiFile) {
  * @param {Object} currFile the current file from Digi being processed
  * @param {Object} resData the data returned from the request to Digi
  */
-function makeDataset(currFile, resData) {
+function makeDataset(currFile, resData, nameContains) {
     let myDataset = {
         name: currFile.Key,
         files: []
     };
 
     // Identifying and creating each file for a specific dataset.
-    resData.Contents.forEach(subFile => {  
+    resData.Contents.forEach(subFile => { 
         if (subFile.Key !== currFile.Key && subFile.Key.startsWith(currFile.Key)) {
             let dataFile = {
                 dataset: currFile.Key,
                 name: subFile.Key.replace(currFile.Key, "")
             };
 
-            myDataset.files.push(dataFile);
+            if (typeof nameContains === "undefined" 
+            || (nameContains && currFile.Key.contains(nameContains))) 
+                myDataset.files.push(dataFile);
         }
     });
 
@@ -49,11 +51,12 @@ module.exports = {
                 Bucket: myDigiSpace,
                 Prefix: `data/${args.myName}`
             };
-    
+            
             // Getting all the files stored in Digi
             s3.listObjectsV2(digiParams, (err, data) => {
                 if (err) reject(err); //TODO make a suitable error object
-                else data.Contents.filter(isDir).forEach(myFile => resolve(makeDataset(myFile, data)));
+                else data.Contents.filter(isDir)
+                        .forEach(myFile => resolve(makeDataset(myFile, data, args.nameContains)));
             });
         });
 

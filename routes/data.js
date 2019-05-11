@@ -62,11 +62,10 @@ router.get("/", function(req, res) {
 router.get("/choochoo", function(req, res) {
     clientQL.query({
         query: gql`{
-            datasets(myName: "topic-dialogues") {
+            datasets(myName: "worldbuilding") {
                 name
-                files {
+                files(nameContains: "Restricted") {
                     name
-                    records
                 }
             }
         }`
