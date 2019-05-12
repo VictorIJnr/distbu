@@ -11,7 +11,7 @@ type Query {
 type Dataset {
     # ID: ID! @unique
     name: String!
-    files(nameContains: String): [File!]!
+    files(matchName: String, nameContains: String): [File!]!
     # owner: User # I'm not scaling this yet.
 }
 

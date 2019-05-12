@@ -57,8 +57,8 @@ router.get("/", function(req, res) {
 });
 
 /**
- * Just an endpoint to test stuff I'm working on with the GraphQL server
- */
+* Just an endpoint to test stuff I'm working on with the GraphQL server
+*/
 router.get("/choochoo", function(req, res) {
     clientQL.query({
         query: gql`{
@@ -81,13 +81,13 @@ router.get("/choochoo", function(req, res) {
 });
 
 /**
- * Retrieves a specified dataset from the database where it's stored.
- */
+* Retrieves a specified dataset from the database where it's stored.
+*/
 router.get("/:dataset/:type", function(req, res) {    
     clientQL.query({
         query: gql`{
             datasets(myName: ${JSON.stringify(req.params.dataset)}) {
-                files(nameContains: ${JSON.stringify(req.params.type)}) {
+                files(matchName: ${JSON.stringify(req.params.type)}) {
                     records
                 }
             }
