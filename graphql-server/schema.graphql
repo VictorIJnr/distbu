@@ -26,5 +26,9 @@ type File {
     dataset: Dataset!
     name: String!
     # records: String!    # This'll store all the data upon a request response. 
-    records: JSON!
+    records(first: Int, skip: Int): JSON!  
 }
+
+# I could extract records to a new type which has the number of records and the records themselves
+# But I don't see the value it'd add, so I'll keep this simple for now. 
+# Sometimes simplicity is a good thing :D

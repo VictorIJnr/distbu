@@ -14,7 +14,7 @@ module.exports = {
     * This is the only place where records should be resolved.
     * Resolving them in a parent would hinder performance too much for my liking.
     */
-    records: async (parent) => {
+    records: async (parent, args) => {
         let myData = [];
         let digiParams = {
             Bucket: myDigiSpace,
@@ -28,7 +28,13 @@ module.exports = {
             });
         });
 
-        await myPromise.then(data => myData = data.Body);
-        return JSON.parse(myData);
+        await myPromise.then(data => myData = JSON.parse(data.Body));
+        
+        if (args.skip) {
+            let startIndex = args.first ? args.first : 0;
+            myData = myData.slice(startIndex, args.skip + 1);
+        }
+
+        return myData;
     }
 }
