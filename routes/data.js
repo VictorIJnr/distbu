@@ -57,30 +57,6 @@ router.get("/", function(req, res) {
 });
 
 /**
-* Just an endpoint to test stuff I'm working on with the GraphQL server
-*/
-router.get("/choochoo", function(req, res) {
-    clientQL.query({
-        query: gql`{
-            datasets(myName: "worldbuilding") {
-                name
-                files(nameContains: "Restricted") {
-                    name
-                }
-            }
-        }`
-    })
-    .then(response => {
-        // res.send(response.data.datasets.files[0].records);
-        res.send(response.data);
-    })
-    .catch(err => {
-        console.log("Errors are fun aren't they? :D");
-        res.send(err);
-    });
-});
-
-/**
 * Retrieves a specified dataset from the database where it's stored.
 */
 router.get("/:dataset/:type", function(req, res) {    
@@ -97,76 +73,5 @@ router.get("/:dataset/:type", function(req, res) {
         res.send(response.data.datasets.files[0].records);
     });
 });
-
-function getFile(dataset, file) {
-    //TODO change this to query the GraphQL server
-    let digiParams = {
-        Bucket: myDigiSpace
-    };
-
-    console.log(`Requesting:\t${dataset}/${file}`);
-    
-    let slippy = new Promise((resolve, reject) => {
-        getFileType(dataset, file)
-        .then((extension) => {
-            /**
-            * I stopped working on this for a month and a half. 
-            * I came back, ran distbu, requested train.json (standard)
-            * then I saw "choo choo" in the console. NGL I thought it was 
-            * pretty funny. 
-            */
-            console.log("choo choo");
-            digiParams.Key = `data/${dataset}/${file}.${extension}`;
-            s3.getObject(digiParams, (err, data) => {
-                if (err) reject(err);
-                else resolve(data);
-            });
-        })
-        .catch((err) => reject(err));
-    }); 
-
-    return slippy;
-}
-
-/**
-* Gets the extension for the requested file.z file from 
-* @param {String} fileName the file to be retrieved from that dataset
-*/
-function getFileType(dataset, fileName) {
-    //TODO change this to query the GraphQL server.
-
-    let digiParams = {
-        Bucket: myDigiSpace,
-        StartAfter: `data/${dataset}`
-    };
-
-    let typePromise = new Promise((resolve, reject) => {
-        s3.listObjectsV2(digiParams, (err, data) => {
-            if (err) res.send(err);
-            else {
-                let extension;
-                data.Contents.forEach(file => {
-                    //Omitting folders (also any empty file)
-                    if (file.Size != 0) {
-                        let name = file.Key.substring(file.Key.lastIndexOf("/") + 1);
-                        if (name.substring(0, name.lastIndexOf(".")) === fileName)
-                            extension = name.substring(name.lastIndexOf(".") + 1);
-                    } 
-                });
-
-                // Because j comes after c in the alphabet, I always get the JSON file back
-                // That's what I want, but if I have scalability issues with file types somehow
-                // just look here. That was accidental btw, I just discovered it after
-                // adding CSV to JSON conversion.
-                console.log(`File Extension:\t${extension}`);
-                if (extension) resolve(extension);
-                else reject("File not found");
-            }
-        });
-    });
-
-    
-    return typePromise;
-}
 
 module.exports = router;

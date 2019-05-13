@@ -25,7 +25,8 @@ def conversion():
     allObjs = digiClient.list_objects_v2(Bucket=digiConfig["digiSpace"])["Contents"]
     allObjs = [myObj for myObj in allObjs if myObj["Size"] != 0 and myObj["Key"].endswith(".csv")]
 
-    objList = [myObj["Key"] for myObj in allObjs if "Users.csv" in myObj["Key"]]
+    # Just realised this is how I restrict which files to convert to a CSV    
+    objList = [myObj["Key"] for myObj in allObjs if "iris.csv" in myObj["Key"]]
 
     for myKey in objList:
         print(f"Converting {myKey} to a JSON file")
