@@ -88,7 +88,7 @@ router.get("/:dataset/:type", function(req, res) {
         query: gql`{
             datasets(myName: ${JSON.stringify(req.params.dataset)}) {
                 files(matchName: ${JSON.stringify(req.params.type)}) {
-                    records(skip: 50)
+                    records(skip: 100, trainSplit: 0.75)
                 }
             }
         }`

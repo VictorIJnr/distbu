@@ -28,11 +28,24 @@ module.exports = {
             });
         });
 
+        // Can't progress unless the data has been loaded from the database
         await myPromise.then(data => myData = JSON.parse(data.Body));
         
+        // Arranging the data appropriate for pagination
         if (args.skip) {
             let startIndex = args.first ? args.first : 0;
-            myData = myData.slice(startIndex, args.skip + 1);
+            myData = myData.slice(startIndex, args.skip);
+        }
+
+        // Making sure an appropriate train/test split can be carried out.
+        if (args.trainSplit && args.trainSplit > 0 && args.trainSplit < 1) {
+            let splitData = {};
+            let splitIndex = myData.length * args.trainSplit;
+
+            splitData.train = myData.slice(0, splitIndex);
+            splitData.test = myData.slice(splitIndex);
+
+            myData = splitData;
         }
 
         return myData;
