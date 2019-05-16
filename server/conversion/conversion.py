@@ -26,7 +26,8 @@ def conversion():
     allObjs = [myObj for myObj in allObjs if myObj["Size"] != 0 and myObj["Key"].endswith(".csv")]
 
     # Just realised this is how I restrict which files to convert to a CSV    
-    objList = [myObj["Key"] for myObj in allObjs if "iris.csv" in myObj["Key"]]
+    # objList = [myObj["Key"] for myObj in allObjs if "iris.csv" in myObj["Key"]]
+    objList = [myObj["Key"] for myObj in allObjs]
 
     for myKey in objList:
         print(f"Converting {myKey} to a JSON file")
@@ -41,7 +42,7 @@ def conversion():
         csvHeaders = splitData[0].split(",")
         splitData = splitData[1:]
 
-        dictList = [{key: value for key, value in zip(csvHeaders, myRecord.split(","))} 
+        dictList = [{key: parseValue(value) for key, value in zip(csvHeaders, myRecord.split(","))} 
                         for myRecord in splitData]
 
         digiClient.put_object(Bucket=digiConfig["digiSpace"],
@@ -72,11 +73,6 @@ def digiConnect():
                     aws_access_key_id=digiConfig["digiKey"],
                     aws_secret_access_key=digiConfig["digiSecret"])
 
-    # List all buckets on your account.
-    # response = client.list_buckets()
-    # spaces = [space['Name'] for space in response['Buckets']]
-    # print("Spaces List: %s" % spaces)
-
     return digiClient
 
 """
@@ -85,6 +81,19 @@ The files I upload back up to Digi aren't CSVs anymore. So don't call them CSVs.
 def genFileName(fileName):
     extensionless = fileName.split(".")[:-1]
     return "".join(extensionless) + ".json"
+
+"""
+Parses the values to make sure that any number is appropriately converted.
+"""
+def parseValue(myValue):
+    retValue = None
+    try:
+        retValue = float(myValue)
+        # if retValue.is_integer(): retValue = int(retValue)
+    except:
+        retValue = myValue
+
+    return retValue
 
 if __name__ == "__main__":
     conversion()
