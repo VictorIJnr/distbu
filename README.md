@@ -34,8 +34,8 @@ I've dropped Prisma entirely, I'll resolve queries on my own. Because of that I 
 
 ## Okay bruv, but you ain't done nothing yet?
 Two things:  
-1. How's that a question?
-2. If I "ain't done nothing yet" then I've done something? I'll take that :D
++ First: How's that a question?
++ Second: If I "ain't done nothing yet" then I've done something? I'll take that :D
 
 > Skip the pediatrics cuz, how'm I gonna run this boi?
 
@@ -43,11 +43,11 @@ _Pedantics_.
 
 > Fam...
 
-Okay, okay it doesn't seem like much because I'm completely ignoring menial crap that doesn't need to be done to run <span style="color:#333">distbu</span>. I'm talking stuff like building a docker image or going to a URL where <span style="color:#333">distbu</span>'s running. But trust me, it's still a lil' complex. <sup><sup><sup><sup>Hell I kinda like the complexity this is reaching.</sup></sup></sup></sup> I just don't want to bore you with each and every <span style="font-size: 0.65em">tiny</span> implementation detail. But this is what I need to do to run this so far.
+Okay, okay it doesn't seem like much because I'm completely ignoring menial crap that doesn't need to be done to run <span style="color:#333">distbu</span>. I'm talking stuff like building a docker image or going to a URL where <span style="color:#333">distbu</span>'s running. But trust me, it's still a lil' complex. <sup>Hell I kinda like the complexity this is reaching.</sup> I just don't want to bore you with each and every <span style="font-size: 0.65em">tiny</span> implementation detail. But this is what I need to do to run this so far.
 
 + Deploy the api service to Heroku 
   + I've already done this, but it won't work for any GraphQL queries yet.
-+ ~~Deploy the MySQL database onto DigitalOcean~~ <sup><sup>Well I don't need this because MySQL isn't a part of <span style="color:#333">distbu</span> anymore</sup></sup>
++ ~~Deploy the MySQL database onto DigitalOcean~~ <sup>Well I don't need this because MySQL isn't a part of <span style="color:#333">distbu</span> anymore</sup>
 + `docker container run --name distQL -p 20794:20794 victorijnr/distql`
     + Now this, this isn't even that complicated. 
     + All this does is start the docker container for the GraphQL API server and exposes the port it's running on to the host machine.
